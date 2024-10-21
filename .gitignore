@@ -1,0 +1,11 @@
+# VSCode configuration
+.vscode/
+
+# Python cache
+__pycache__/
+
+# Large data
+d2l-playground/data/
+
+# Textbook
+d2l-zh/
