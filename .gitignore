@@ -9,3 +9,6 @@ d2l-playground/data/
 
 # Textbook
 d2l-zh/
+
+# Image
+*.png

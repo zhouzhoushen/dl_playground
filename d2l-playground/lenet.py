@@ -33,7 +33,7 @@ for layer in net:
 batch_size = 256
 train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size = batch_size)
 
-def evaluate_accury_gpu(net, data_iter, device = None):
+def evaluate_accuracy_gpu(net, data_iter, device = None):
     if isinstance(net, nn.Module):
         net.eval()
         if not device:
@@ -81,7 +81,7 @@ def train_ch6(net, train_iter, test_iter, num_epochs, lr, device):
                 if (i + 1) % (num_batches // 5) == 0 or i == num_batches - 1:
                     animator.add(epoch + (i + 1) / num_batches,
                                  [train_l, train_acc, None])
-            test_acc = evaluate_accury_gpu(net, test_iter)
+            test_acc = evaluate_accuracy_gpu(net, test_iter)
             animator.add(epoch + 1, (None, None, test_acc))
             d2l.plt.draw()
         print(f"loss {train_l:.3f}, train acc {train_acc:.3f}, test acc {test_acc:.3f}")
