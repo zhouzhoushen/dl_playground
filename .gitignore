@@ -5,10 +5,10 @@
 __pycache__/
 
 # Large data
-d2l-playground/data/
+d2l_playground/data/
 
 # Textbook
-d2l-zh/
+d2l_zh/
 
 # Image
 *.png
