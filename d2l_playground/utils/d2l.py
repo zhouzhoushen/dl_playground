@@ -582,10 +582,9 @@ class LeNet(d2l.Classifier):
             nn.LazyLinear(84), nn.Sigmoid(),
             nn.LazyLinear(num_classes))
 
+"""
 class Residual(nn.Module):
-    """The Residual block of ResNet models.
-
-    Defined in :numref:`sec_resnet`"""
+    # The Residual block of ResNet models. Defined in :numref:`sec_resnet`
     def __init__(self, num_channels, use_1x1conv=False, strides=1):
         super().__init__()
         self.conv1 = nn.LazyConv2d(num_channels, kernel_size=3, padding=1,
@@ -606,6 +605,35 @@ class Residual(nn.Module):
             X = self.conv3(X)
         Y += X
         return F.relu(Y)
+"""
+
+class Residual(nn.Module):
+    def __init__(self, input_channels, num_channels, use_1x1conv = False,
+                 stride = 1):
+        super().__init__()
+        self.conv1 = nn.Conv2d(
+            input_channels, num_channels, kernel_size = 3,
+            padding = 1, stride = stride)
+        self.conv2 = nn.Conv2d(
+            num_channels, num_channels, kernel_size =  3, padding = 1
+            )
+        if use_1x1conv:
+            self.conv3 = nn.Conv2d(
+                input_channels, num_channels, kernel_size = 1, stride = stride
+            )
+        else:
+            self.conv3 = None
+        self.bn1 = nn.BatchNorm2d(num_features = num_channels)
+        self.bn2 = nn.BatchNorm2d(num_features = num_channels)
+        self.relu = nn.ReLU(inplace = True)
+        
+    def forward(self, X):
+        Y = self.relu(self.bn1(self.conv1(X)))
+        Y = self.bn2(self.conv2(Y))
+        if self.conv3:
+            X = self.conv3(X)
+        Y += X
+        return self.relu(Y)
 
 class ResNeXtBlock(nn.Module):
     """The ResNeXt block.
